@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Recipe</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+            background-attachment: fixed;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .header {
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: calc(100% - 24px);
+            padding: 14px;
+            margin: 12px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        input:focus, textarea:focus {
+            border-color: #6f4f28;
+            box-shadow: 0 0 8px rgba(111, 79, 40, 0.5);
+            outline: none;
+        }
+        textarea {
+            resize: vertical;
+            height: 120px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            font-size: 16px;
+            color: white;
+        }
+        .submit-button {
+            background-color: #6f4f28; /* Dark brown color */
+        }
+        .submit-button:hover {
+            background-color: #5a3e1f; /* Slightly darker brown */
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(111, 79, 40, 0.3);
+        }
+        .submit-button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 6px rgba(111, 79, 40, 0.3);
+        }
+        .list-button {
+            background-color: #8e735b; /* Light brown */
+        }
+        .list-button:hover {
+            background-color: #7a614b; /* Slightly darker light brown */
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(122, 97, 75, 0.3);
+        }
+        .list-button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 6px rgba(122, 97, 75, 0.3);
+        }
+        .video-link {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #2c3e50;
+        }
+        .video-link a {
+            color: #6f4f28;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .video-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            Add Your Recipe
+        </div>
+        <form id="recipeForm">
+            <input type="text" id="recipeName" placeholder="Recipe Name" required>
+            <textarea id="ingredients" placeholder="Ingredients" required></textarea>
+            <textarea id="steps" placeholder="Steps" required></textarea>
+            <input type="text" id="imageUrl" placeholder="Image URL" required>
+            <input type="text" id="videoUrl" placeholder="Video URL (Optional)">
+            <div class="button-group">
+                <button type="submit" class="submit-button">Add Recipe</button>
+                <a href="index2.html"><button type="button" class="list-button">Go to List Page</button></a>
+            </div>
+        </form>
+       
+    <script>
+        document.getElementById('recipeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('recipeName').value;
+            const ingredients = document.getElementById('ingredients').value;
+            const steps = document.getElementById('steps').value;
+            const imageUrl = document.getElementById('imageUrl').value;
+            const videoUrl = document.getElementById('videoUrl').value;
+
+            const recipe = { name, ingredients, steps, imageUrl, videoUrl };
+            let recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+            recipes.push(recipe);
+            localStorage.setItem('recipes', JSON.stringify(recipes));
+
+            alert('Recipe added successfully!');
+            window.location.href = 'index2.html';
+        });
+    </script>
+</body>
+</html>

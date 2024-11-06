@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe List</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+            background-attachment: fixed;
+        }
+        .navbar {
+            width: 100%;
+            max-width:1900px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            justify-content: space-between;
+        }
+        .navbar .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .navbar input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 300px;
+            margin: 0 15px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: black;
+            font-size: 20px;
+            margin: 0 25px;
+            transition: color 0.3s;
+        }
+        .navbar a:hover {
+            color: #0056b3;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 1500px;
+            backdrop-filter: blur(10px);
+            margin: 100px auto 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+        }
+        .recipe {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .recipe:hover {
+            transform: scale(1.05);
+        }
+        .recipe img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .recipe h2 {
+            margin: 10px 0;
+            color: #2c3e50;
+            font-size: 18px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: rgba(255, 255, 255);
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+            
+        }
+        .modal-content img {
+            width: 100%;
+            height: auto;
+        }
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .modal-buttons .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        .modal-buttons .add-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        #searchBar {
+            border: 1.5px solid black;
+        }
+        /* Responsive Styles */
+@media (max-width: 1200px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr); /* 4 columns on medium screens */
+    }
+}
+
+@media (max-width: 800px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns on smaller screens */
+    }
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile devices */
+    }
+    .navbar input[type="text"] {
+        width: 200px; /* Adjust search bar width on small screens */
+    }
+    .navbar .title {
+        font-size: 1.2em; /* Smaller title on mobile */
+    }
+}
+
+@media (max-width: 400px) {
+    .navbar a {
+        font-size: 1em; /* Further reduce link font size on extra small screens */
+    }
+    .recipe h2 {
+        font-size: 0.9em; /* Smaller recipe title on mobile */
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="title">Recipe Book</div>
+        <input type="text" id="searchBar" placeholder="Search recipes...">
+        <div class="nav-links">
+            <a href="index1.html">Add</a>
+            <a href="index3.html">Contact</a>
+        </div>
+    </div>
+    <div class="container">
+        <div id="recipeList" class="grid"></div>
+    </div>
+    <div id="recipeModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModalFunction()">×</button>
+            <div id="modalDetails"></div>
+            <div class="modal-buttons">
+                <button class="delete-btn" id="deleteRecipeBtn">Delete</button>
+             
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recipeList = document.getElementById('recipeList');
+            const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+            const recipeModal = document.getElementById('recipeModal');
+            const modalDetails = document.getElementById('modalDetails');
+            const searchBar = document.getElementById('searchBar');
+            let currentRecipeIndex = null;
+
+            function openRecipe(index) {
+                const recipe = recipes[index];
+                currentRecipeIndex = index;
+                modalDetails.innerHTML = `
+                    <h2>${recipe.name}</h2>
+                    <p><strong>Ingredients:</strong><br>${recipe.ingredients}</p>
+                    <p><strong>Steps:</strong><br>${recipe.steps}</p>
+                    ${recipe.videoUrl ? `<p><strong>Video:</strong><br><a href="${recipe.videoUrl}" target="_blank">${recipe.videoUrl}</a></p>` : ''}
+                `;
+                recipeModal.style.display = 'flex';
+            }
+
+            function closeModalFunction() {
+                recipeModal.style.display = 'none';
+            }
+
+            function deleteRecipe() {
+                recipes.splice(currentRecipeIndex, 1);  // Remove the recipe
+                localStorage.setItem('recipes', JSON.stringify(recipes));
+                displayRecipes(recipes);  // Update the displayed recipes
+                closeModalFunction();
+            }
+
+            function correctRecipe() {
+                // Add your correction logic here
+                alert('Recipe corrected!');
+                closeModalFunction();
+            }
+
+            function displayRecipes(filteredRecipes) {
+                recipeList.innerHTML = '';
+                if (filteredRecipes.length === 0) {
+                    recipeList.innerHTML = '<p>No recipes found.</p>';
+                    return;
+                }
+                filteredRecipes.forEach((recipe, index) => {
+                    const recipeElement = document.createElement('div');
+                    recipeElement.className = 'recipe';
+                    recipeElement.innerHTML = `
+                        <h2>${recipe.name}</h2>
+                        <img src="${recipe.imageUrl}" alt="${recipe.name}" onclick="openRecipe(${index})">
+                    `;
+                    recipeList.appendChild(recipeElement);
+                });
+            }
+
+            function searchRecipes() {
+                const searchTerm = searchBar.value.toLowerCase();
+                const filteredRecipes = recipes.filter(recipe => 
+                    recipe.name.toLowerCase().includes(searchTerm) || 
+                    recipe.ingredients.toLowerCase().includes(searchTerm) ||
+                    recipe.steps.toLowerCase().includes(searchTerm)
+                );
+                displayRecipes(filteredRecipes);
+            }
+
+            searchBar.addEventListener('input', searchRecipes);
+
+            displayRecipes(recipes);
+
+            document.getElementById('deleteRecipeBtn').addEventListener('click', deleteRecipe);
+            
+
+            window.openRecipe = openRecipe;
+            window.closeModalFunction = closeModalFunction;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essence of Flavor</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            background: url("https://img.freepik.com/free-photo/flat-lay-burger-ingredients-with-chalkboard_23-2148235092.jpg") no-repeat center center/cover;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            color: white;
+        }
+
+        .container {
+            padding: 0 5%;
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+
+        h1 {
+            font-size: 6em;
+            margin: 0;
+            background: linear-gradient(to right, #f1e8ea, #f7e9e6);
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: animateText 6s ease-in-out infinite;
+        }
+
+        @keyframes animateText {
+            0% { letter-spacing: 2px; transform: translateY(0); }
+            25% { letter-spacing: 8px; transform: translateY(-10px); }
+            50% { letter-spacing: 2px; transform: translateY(0); }
+            75% { letter-spacing: 8px; transform: translateY(10px); }
+            100% { letter-spacing: 2px; transform: translateY(0); }
+        }
+
+        .subheading {
+            font-size: 2em;
+            margin-top: 20px;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .animation-container {
+            margin-top: 30px;
+            max-width: 80%;
+            height: auto;
+            animation: slideIn 3s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+            /* Responsive Design */
+            @media (max-width: 1200px) {
+            h1 {
+                font-size: 4.5em;
+            }
+            .subheading {
+                font-size: 1.8em;
+            }
+        }
+
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 4em;
+            }
+            .subheading {
+                font-size: 1.5em;
+            }
+            .animation-container {
+                max-width: 85%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 12vw;
+            }
+            .subheading {
+                font-size: 6vw;
+            }
+            .animation-container {
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 10vw;
+            }
+            .subheading {
+                font-size: 5vw;
+            }
+            .animation-container {
+                max-width: 95%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 15vw;
+            }
+            .subheading {
+                font-size: 8vw;
+            }
+            .animation-container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Essence of Flavor</h1>
+        <div class="subheading">A Culinary Journey Awaits</div>
+    </div>
+    <div class="animation-container">
+        <img src="https://i.pinimg.com/originals/93/5e/f3/935ef3e9c164fe37ddde01ccd8cec4ba.gif" alt="Animation" style="width: 100%; height: auto;">
+    </div>
+
+    <script>
+        // Redirect to the next page after 6 seconds
+        setTimeout(function() {
+            window.location.href = "index2.html";
+        }, 5000);
+    </script>
+</body>
+</html>
